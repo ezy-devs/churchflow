@@ -483,7 +483,7 @@ a{
 
     .main {
         display: block;
-        border: 3px solid blue;
+        /* border: 3px solid blue; */
     }
 
     /* .container {
@@ -533,7 +533,23 @@ a{
         left: 0;
         right: 0;
     }
-
+    .topbar .actions {
+        padding: 2px;
+        gap: 2px;
+    }
+    .topbar .actions .icon {
+        width: 30px;
+        height: 30px;
+        margin-top: -0.10px;
+    }
+    .topbar .actions .icon span {
+        font-size: 18px;
+    }
+    .action {
+        padding: 2px;
+        gap: 2px;
+        height: 30px;
+    }
     .overview-stats .row {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -546,6 +562,9 @@ a{
 
     .finance {
         flex-direction: flex;
+    }
+    .status-rating {
+        display: block;
     }
 
     .main-content {
