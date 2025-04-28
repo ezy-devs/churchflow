@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - DLCF Fideipoly</title>
+  <!-- Font Awesome Icons CDN -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"
+    integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous" />
+  <link rel="stylesheet" href="static/css/dashboard.css">
+</head>
+
+<body>
+  <div class="main">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar">
+        <div class="brand">
+          <img src="static/assets/images/dlcf logo.jpg" alt="Logo" class="logo">
+          <h2 class="brand-name">DLCF Fideipoly</h2>
+        </div>
+        <ul class="links">
+          <li class="link"><a href="#">Dashboard</a></li>
+          <li class="link"><a href="#">Members</a></li>
+          <li class="link"><a href="#">Attendance</a></li>
+          <li class="link"><a href="#">Finance</a></li>
+          <li class="link"><a href="#">Sermon library</a></li>
+          <li class="link"><a href="#">Settings</a></li>
+          <li class="link"><a href="#">Logout</a></li>
+        </ul>
+      </div>
+    </aside>
+<script>
+const hamburgerMenu = document.getElementById('hamburger-menu');
+
+function openNav() {
+    sidebar.style.display = "block";
+    document.getElementById('close-btn').style.display = 'grid';
+    document.getElementById('open-btn').style.display = 'none';
+    hamburgerMenu.classList.remove('open-btn')
+}
+function closeNav() {
+    document.getElementById('open-btn').style.display = 'grid';
+    document.getElementById('close-btn').style.display = 'none';
+    sidebar.style.display = "none";
+}
+</script>
+    <div class="container">
+      <div class="topbar" id="topbar">
+        <div class="left" style="display: flex; align-items: center; gap: 10px;">
+          <div class="hamburger-menu open-btn" id="open-btn" onclick="openNav()" title="openNav">
+            <span class="line"></span>
+            <span class="line"></span>
+
+            <span class="line"></span>
+            <span class="line"></span>
+          </div>
+          <div class="hamburger-menu close-btn" id="close-btn" onclick="closeNav()" title="closeNav">
+            <span class="line"></span>
+            <span class="line"></span>
+
+            <span class="line"></span>
+            <span class="line"></span>
+          </div>
+          <h2 class="title">Transactions</h2>
+        </div>
+        <div class="actions">
+          <div class="action">
+            <div class="icon">
+              <span><i class="fas fa-moon"></i></span>
+            </div>
+            <div class="icon">
+              <span><i class="fa fa-cog" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="action">
+            <div class="icon">
+              <span><i class="fas fa-bell"></i></span>
+            </div>
+            <div class="icon">
+              <span><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="transaction-form-container">
+            <form id="transaction-form" class="transaction-form">
+                <h3>Add New Transaction</h3>
+                <div class="form-group">
+                    <label for="transaction-type">Transaction Type</label>
+                    <select id="transaction-type" name="transaction-type" required>
+                        <option value="" disabled selected>Select type</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" placeholder="Enter description" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Add Transaction</button>
+            </form>
+        </div>
+
+        <style>
+            .transaction-form-container {
+                max-width: 500px;
+                margin: 0 auto;
+                padding: 20px;
+                background: #f9f9f9;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .transaction-form h3 {
+                text-align: center;
+                margin-bottom: 20px;
+                color: #333;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: #555;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 14px;
+            }
+
+            .form-group textarea {
+                resize: none;
+            }
+
+            .btn-submit {
+                width: 100%;
+                padding: 10px;
+                background: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+
+            .btn-submit:hover {
+                background: #0056b3;
+            }
+
+            @media (max-width: 768px) {
+                .transaction-form-container {
+                    padding: 15px;
+                }
+
+                .btn-submit {
+                    font-size: 14px;
+                }
+            }
+        </style>
+
+        <script>
+            document.getElementById('transaction-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const transactionType = document.getElementById('transaction-type').value;
+                const amount = document.getElementById('amount').value;
+                const date = document.getElementById('date').value;
+                const description = document.getElementById('description').value;
+
+                if (transactionType && amount && date) {
+                    alert(`Transaction added successfully!\nType: ${transactionType}\nAmount: ${amount}\nDate: ${date}\nDescription: ${description}`);
+                    this.reset();
+                } else {
+                    alert('Please fill out all required fields.');
+                }
+            });
+        </script>
+      </div>
+    </div>
+  </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="static/assets/js/navbar.jss"></script>
+    <script src="static/assets/js/charts.js"></script>
+    <!-- <script src="static/js/dashboard.js"></script> -->
+
+
+</body>
+
+</html>
