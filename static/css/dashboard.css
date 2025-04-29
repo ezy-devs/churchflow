@@ -8,6 +8,17 @@ body {
 }
 
 
+html {
+    scroll-behavior: smooth;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+.dash-content {
+    margin-left:250px;
+}
+
 .main {
     display: flex;
     min-height: 100vh;
@@ -144,6 +155,7 @@ a{
     z-index: 100;
 }
 
+
 .left {
     padding: 5px;
 }
@@ -172,6 +184,16 @@ a{
     border: 1px solid #17206d;
 }
 
+
+.action-tailwind {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #17206d;
+}
+
+.action-tailwind .icon {
+    cursor: pointer;
+}
 .topbar .icon {
     border-radius: 5px;
     width: 40px;
@@ -180,6 +202,11 @@ a{
     background-color: #9a9ada;
     text-align: center;
     cursor: pointer;
+}
+
+.icon:hover {
+    color: #17206d;
+    transition: all 300ms ease-in;
 }
 
 .topbar .actions .icon span {
@@ -267,7 +294,7 @@ a{
     padding: 20px;
     flex: 1;
     height: 100px;
-    max-width: calc(33% - 20px);
+    /* max-width: calc(50% - 20px); */
     transition: all 300ms ease-in;
 }
 
@@ -387,6 +414,9 @@ a{
     border-collapse: collapse;
 }
 
+.table-responsive table .link {
+    color:#333;
+}
 .table-responsive table th,
 .table-responsive table td {
     border-bottom: 1px solid #ddd;
@@ -481,6 +511,9 @@ a{
 /* responsive design */
 @media (max-width: 768px) {
 
+    .dash-content {
+        margin-left:0;
+    }
     .main {
         display: block;
         /* border: 3px solid blue; */
@@ -569,7 +602,7 @@ a{
 
     .main-content {
         /* width: 100%; */
-        margin-left: 0;
+        margin: 5px auto;
     }
 
     .main-content .row {
