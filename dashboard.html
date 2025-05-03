@@ -2,56 +2,111 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - DLCF Fideipoly</title>
-  <!-- Font Awesome Icons CDN -->
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"
     integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous" />
-    <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7ie2eZlZ+6e5e5e5e5e5e5e5e5e5e5e5e5e5" crossorigin="anonymous">
-  <link rel="stylesheet" href="static/css/dashboard.css">
+  <!-- tailwind css cdn -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="static/css/dashboard.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="static/js/dashboard.js" defer></script>
+
 </head>
 
 <body>
-  <div class="main">
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const darkModeToggle = document.querySelector('.fa-moon');
+      const body = document.body;
 
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar">
-        <div class="brand">
-          <img src="static/assets/images/dlcf logo.jpg" alt="Logo" class="logo">
-          <h2 class="brand-name">DLCF Fideipoly</h2>
+      // Check for saved dark mode preference
+      const savedDarkMode = localStorage.getItem('darkMode');
+      if (savedDarkMode === 'enabled') {
+        body.classList.add('dark-mode');
+      }
+
+      darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+          localStorage.setItem('darkMode', 'enabled');
+        } else {
+          localStorage.setItem('darkMode', 'disabled');
+        }
+      });
+    });
+  </script>
+
+  <style>
+    body.dark-mode {
+      background-color: #1a202c;
+      color: #f7fafc;
+    }
+
+    body.dark-mode .bg-gray-100 {
+      background-color: #2d3748;
+    }
+
+    body.dark-mode .bg-white {
+      background-color: #4a5568;
+    }
+
+    body.dark-mode .text-gray-500 {
+      color: #a0aec0;
+    }
+
+    body.dark-mode .hover\:bg-gray-700:hover {
+      background-color: #2d3748;
+    }
+  </style>
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white h-screen" id="sidebar">
+      <div class="flex p-4 items-center space-x-2">
+        <div class="flex p-4 items-center">
+          <img src="static/assets/images/dlcf logo.jpg" alt="Logo" class="w-10 h-10 mx-auto rounded-xl">
+          <h2 class="text-center text-lg font-bold">DLCF Fideipoly</h2>
         </div>
-        <ul class="links">
-          <li class="link"><a href="#">Dashboard</a></li>
-          <li class="link"><a href="#">Members</a></li>
-          <li class="link"><a href="#">Attendance</a></li>
-          <li class="link"><a href="#">Finance</a></li>
-          <li class="link"><a href="#">Sermon library</a></li>
-          <li class="link"><a href="#">Settings</a></li>
-          <li class="link"><a href="#">Logout</a></li>
-        </ul>
-      </div>
-    </aside>
-<script>
-const hamburgerMenu = document.getElementById('hamburger-menu');
 
-function openNav() {
-    sidebar.style.display = "block";
-    document.getElementById('close-btn').style.display = 'grid';
-    document.getElementById('open-btn').style.display = 'none';
-    hamburgerMenu.classList.remove('open-btn')
-}
-function closeNav() {
-    document.getElementById('open-btn').style.display = 'grid';
-    document.getElementById('close-btn').style.display = 'none';
-    sidebar.style.display = "none";
-}
-</script>
-    <div class="container">
-      <div class="topbar" id="topbar">
-        <div class="left" style="display: flex; align-items: center; gap: 10px;">
+        <button id="close-btn" class="hidden md:hidden" onclick="closeNav()">
+          <i class="fas fa-times text-blue-500"></i>
+        </button>
+      </div>
+      <ul class="mt-4 space-y-2">
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Dashboard</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Members</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Attendance</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Finance</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Sermon Library</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Settings</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Logout</a></li>
+      </ul>
+    </aside>
+
+    <script>
+      const hamburgerMenu = document.getElementById('hamburger-menu');
+
+      function openNav() {
+        sidebar.style.display = "block";
+        document.getElementById('close-btn').style.display = 'grid';
+        document.getElementById('open-btn').style.display = 'none';
+        hamburgerMenu.classList.remove('open-btn')
+      }
+      function closeNav() {
+        document.getElementById('open-btn').style.display = 'grid';
+        document.getElementById('close-btn').style.display = 'none';
+        sidebar.style.display = "none";
+      }
+    </script>
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <!-- Topbar -->
+      <div class="flex items-center justify-between bg-gray-100 p-4 shadow fixed top-0 left-0 right-0 z-10 h-12">
+        <div class="flex items-center space-x-4">
           <div class="hamburger-menu open-btn" id="open-btn" onclick="openNav()" title="openNav">
             <span class="line"></span>
             <span class="line"></span>
@@ -59,220 +114,138 @@ function closeNav() {
             <span class="line"></span>
             <span class="line"></span>
           </div>
-          <div class="hamburger-menu close-btn" id="close-btn" onclick="closeNav()" title="closeNav">
-            <span class="line"></span>
-            <span class="line"></span>
 
-            <span class="line"></span>
-            <span class="line"></span>
-          </div>
-          <h2 class="title">Dashboard</h2>
+          <h2 class="text-xl font-bold">Dashboard</h2>
         </div>
-        <div class="actions">
-          <div class="action">
-            <div class="icon">
-              <span><i class="fas fa-moon"></i></span>
-            </div>
-            <div class="icon">
-              <span><i class="fa fa-cog" aria-hidden="true"></i></span>
-            </div>
+        <div class="flex items-center space-x-4">
+          <div class="action-tailwind flex items-center space-x-4">
+            <i class="icon fas fa-moon text-gray-600 text-blue-500"></i>
+            <i class="icon fa fa-cog text-gray-600 text-blue-500"></i>
           </div>
-          <div class="action">
-            <div class="icon">
-              <span><i class="fas fa-bell"></i></span>
-            </div>
-            <div class="icon">
-              <span><i class="fa fa-user-circle" aria-hidden="true"></i></span>
-            </div>
+          <div class="action-tailwind flex items-center space-x-4">
+            <i class="icon fas fa-bell text-gray-600 text-blue-500"></i>
+            <i class="icon fa fa-user-circle text-gray-600 text-blue-500"></i>
           </div>
+
 
         </div>
       </div>
 
-      <div class="main-content">
-        <div class="overview-stats">
-          <div class="row">
-            <div class="card card-1">
-              <div class="card-body">
-                <div class="card-row">
-                  <div class="card-icon">
-                    <span class="icon"><i class="fas fa-users"></i></span>
-                  </div>
-                  <div class="card-title">
-                    <h3>Total Members</h3>
-                  </div>
-                </div>
-                <div class="card-value">
-                  <h2>150</h2>
-                </div>
-              </div>
+      <!-- Dashboard Content -->
+      <div class="p-4 mt-10 space-y-4 flex-1 dash-content">
+        <!-- Overview Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="card p-4 shadow rounded">
+            <div class="flex items-center space-x-4">
+              <i class="fas fa-users text-blue-500 text-2xl"></i>
+              <h3 class="text-lg font-bold">Total Members</h3>
             </div>
-
-            <div class="card card-2">
-              <div class="card-body">
-                <div class="card-row">
-                  <div class="card-icon">
-                    <span class="icon"><i class="fas fa-users"></i></span>
-                  </div>
-                  <div class="card-title">
-                    <h3>Total Workers</h3>
-                  </div>
-                </div>
-                <div class="card-value">
-                  <h2>1,230</h2>
-                </div>
-              </div>
+            <h2 class="text-1xl font-bold mt-2">150</h2>
+          </div>
+          <div class="card p-4 shadow rounded">
+            <div class="flex items-center space-x-4">
+              <i class="fas fa-users text-green-500 text-2xl"></i>
+              <h3 class="text-lg font-bold">Total Workers</h3>
             </div>
-
-            <div class="card card-1">
-              <div class="card-body">
-                <div class="card-row">
-                  <div class="card-icon">
-                    <span class="icon"><i class="fas fa-users"></i></span>
-                  </div>
-                  <div class="card-title">
-                    <h3>Attendance Stats</h3>
-                  </div>
-                </div>
-                <div class="card-value">
-                  <h2>320</h2>
-                  <p>This Week</p>
-                </div>
-              </div>
+            <h2 class="text-1xl font-bold mt-2">1,230</h2>
+          </div>
+          <div class="card p-4 shadow rounded">
+            <div class="flex items-center space-x-4">
+              <i class="fas fa-users text-yellow-500 text-1.5xl"></i>
+              <h3 class="text-lg font-bold">Attendance Stats</h3>
             </div>
-
-            <div class="card card-2">
-              <div class="card-body">
-                <div class="card-row">
-                  <div class="card-icon">
-                    <span class="icon"><i class="fas fa-users"></i></span>
-                  </div>
-                  <div class="card-title">
-                    <h3>Total Members</h3>
-                  </div>
-                </div>
-                <div class="card-value">
-                  <h2>150</h2>
-                </div>
-              </div>
+            <div class="flex items-center space-x-2 mt-2">
+              <h2 class="text-1xl font-bold">320</h2>
+              <p class="text-sm text-gray-500">This Week</p>
             </div>
 
           </div>
-        </div>
-
-        <div class="overviews-container">
-          <div class="grid">
-
-            <div class="left">
-
-              <div class="attandance-overview">
-                <div class="attandance">
-                  <h2>Attendance Overview</h2>
-                  <div class="attandance-chart">
-                    <canvas id="attendanceChart"></canvas>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="members-overview">
-                <div class="members-table table-responsive">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th><a href="#" class="link">Members</a></th>
-                        <th><a href="#" class="link">View All</a></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>John Doe</td>
-                        <td><span class="status active">Member</span></td>
-                      </tr>
-                      <tr>
-                        <td>Jane Smith</td>
-                        <td><span class="status active">Visitor</span></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td><span class="status active">Member</span></td>
-                      </tr>
-                      <tr>
-                        <td>John Doe</td>
-                        <td><span class="status active">Member</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
+          <div class="card p-4 shadow rounded">
+            <div class="flex items-center space-x-4">
+              <i class="fas fa-users text-red-500 text-2xl"></i>
+              <h3 class="text-lg font-bold">Total Members</h3>
             </div>
-
-            <div class="right">
-              <div class="financial-overview">
-                <h2>Financial Overview</h2>
-                <div class="finance">
-                  <div class="income-chart" style="height: 250px;">
-                    <canvas id="incomeChart" width="360px"></canvas>
-                  </div>
-                  <div class="status-rating">
-                    <div class="status income">
-                      <h3>&#8358;520,000</h3>
-                      <p>Income</p>
-                    </div>
-                    <div class="status expenses">
-                      <h3>&#8358;410,000</h3>
-                      <p>Expenses</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="events-overview">
-                <div class="recent-events table-responsive">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th><a href="#" class="link">Recent Events</a></th>
-                        <th><a href="#" class="link">View All</a></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        
-                        <td>Prayer Meeting</td>
-                        <td><span class="status active">2 May, 2025</span></td>
-                      </tr>
-                      <tr>
-                        <td>Sunday Service</td>
-                        <td><span class="status active">2 May, 2025</span></td>
-                      </tr>
-                      <tr>
-                        <td>Bible Study</td>
-                        <td><span class="status active">2 May, 2025</span></td>
-                      </tr>
-                      <tr>
-                        <td>Community Outreach</td>
-                        <td><span class="status active">2 May, 2025</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
+            <h2 class="text-1xl font-bold mt-2">150</h2>
           </div>
         </div>
 
+        <!-- Additional Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <!-- Left Section -->
+          <div class="lg:col-span-2 space-y-4">
+            <div class="bg-white p-4 shadow rounded">
+              <h2 class="text-lg font-bold">Attendance Overview</h2>
+              <canvas id="attendanceChart" class="mt-4"></canvas>
+            </div>
+            <div class="bg-white p-4 shadow rounded">
+              <h2 class="text-lg font-bold">Members</h2>
+              <table class="w-full mt-4">
+                <thead>
+                  <tr class="text-left">
+                    <th class="border-b pb-2">Name</th>
+                    <th class="border-b pb-2">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="py-2">John Doe</td>
+                    <td class="py-2 text-green-500">Member</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2">Jane Smith</td>
+                    <td class="py-2 text-yellow-500">Visitor</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Right Section -->
+          <div class="space-y-4">
+            <div class="bg-white p-4 shadow rounded">
+              <h2 class="text-lg font-bold">Financial Overview</h2>
+              <canvas id="incomeChart" class="mt-4"></canvas>
+              <div class="flex justify-between mt-4">
+                <div>
+                  <h3 class="text-green-500 font-bold">&#8358;520,000</h3>
+                  <p class="text-sm text-gray-500">Income</p>
+                </div>
+                <div>
+                  <h3 class="text-red-500 font-bold">&#8358;410,000</h3>
+                  <p class="text-sm text-gray-500">Expenses</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white p-4 shadow rounded">
+              <h2 class="text-lg font-bold">Recent Events</h2>
+              <table class="w-full mt-4">
+                <thead>
+                  <tr class="text-left">
+                    <th class="border-b pb-2">Event</th>
+                    <th class="border-b pb-2">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="py-2">Prayer Meeting</td>
+                    <td class="py-2 text-gray-500">2 May, 2025</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2">Sunday Service</td>
+                    <td class="py-2 text-gray-500">2 May, 2025</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="static/assets/js/navbar.jss"></script>
-    <script src="static/assets/js/charts.js"></script>
-    <!-- <script src="static/js/dashboard.js"></script> -->
-
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="static/assets/js/navbar.jss"></script>
+  <script src="static/assets/js/charts.js"></script>
 </body>
 
 </html>

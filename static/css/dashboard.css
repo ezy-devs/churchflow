@@ -15,6 +15,30 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
 }
+
+/* Add a dark mode toggle button */
+body.dark-mode {
+    background-color: #1a202c;
+    color: #f7fafc;
+  }
+
+  body.dark-mode .bg-gray-100 {
+    background-color: #2d3748;
+  }
+
+  body.dark-mode .bg-white {
+    background-color: #4a5568;
+  }
+
+  body.dark-mode .text-gray-500 {
+    color: #a0aec0;
+  }
+
+  body.dark-mode .hover\:bg-gray-700:hover {
+    background-color: #2d3748;
+  }
+
+
 .dash-content {
     margin-left:250px;
 }

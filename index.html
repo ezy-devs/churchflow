@@ -1,286 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Page Title</title>
-  <!-- Font Awesome CDN -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"
-    integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous" />
-  <!-- tailwind css cdn -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="static/css/dashboard.css" />
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="static/js/dashboard.js" defer></script>
-  <!-- <link rel="stylesheet" href="static/css/dashboard.css" />
-  <link rel="stylesheet" href="static/css/hamburger.css" />
-  <link rel="stylesheet" href="static/css/sidebar.css" />
-  <link rel="stylesheet" href="static/css/topbar.css" />
-  <link rel="stylesheet" href="static/css/overview.css" />
-  <link rel="stylesheet" href="static/css/members.css" />
-  <link rel="stylesheet" href="static/css/finance.css" />
-  <link rel="stylesheet" href="static/css/events.css" />
-  <link rel="stylesheet" href="static/css/attendance.css" -->
-</head>
-
-<body>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const darkModeToggle = document.querySelector('.fa-moon');
-      const body = document.body;
-
-      // Check for saved dark mode preference
-      const savedDarkMode = localStorage.getItem('darkMode');
-      if (savedDarkMode === 'enabled') {
-        body.classList.add('dark-mode');
-      }
-
-      darkModeToggle.addEventListener('click', () => {
-        body.classList.toggle('dark-mode');
-        if (body.classList.contains('dark-mode')) {
-          localStorage.setItem('darkMode', 'enabled');
-        } else {
-          localStorage.setItem('darkMode', 'disabled');
-        }
-      });
-    });
+  <title>FaithNexus | Connected in Faith</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script defer>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('translate-x-full');
+    }
   </script>
+</head>
+<body class="bg-gray-50 text-gray-800 relative">
 
-  <style>
-    body.dark-mode {
-      background-color: #1a202c;
-      color: #f7fafc;
-    }
-
-    body.dark-mode .bg-gray-100 {
-      background-color: #2d3748;
-    }
-
-    body.dark-mode .bg-white {
-      background-color: #4a5568;
-    }
-
-    body.dark-mode .text-gray-500 {
-      color: #a0aec0;
-    }
-
-    body.dark-mode .hover\:bg-gray-700:hover {
-      background-color: #2d3748;
-    }
-  </style>
-  <div class="flex">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-gray-800 text-white h-screen" id="sidebar">
-      <div class="flex p-4 items-center space-x-2">
-        <div class="flex p-4 items-center">
-          <img src="static/assets/images/dlcf logo.jpg" alt="Logo" class="w-10 h-10 mx-auto rounded-xl">
-          <h2 class="text-center text-lg font-bold">DLCF Fideipoly</h2>
-        </div>
-
-        <button id="close-btn" class="hidden md:hidden" onclick="closeNav()">
-          <i class="fas fa-times text-blue-500"></i>
-        </button>
-      </div>
-      <ul class="mt-4 space-y-2">
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Dashboard</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Members</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Attendance</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Finance</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Sermon Library</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Settings</a></li>
-        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Logout</a></li>
+  <!-- Sidebar (Hidden by default) -->
+  <aside id="sidebar" class="fixed top-0 right-0 w-72 h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+    <div class="p-4 border-b flex justify-between items-center">
+      <h2 class="text-lg font-semibold text-blue-600">Sidebar Menu</h2>
+      <button onclick="toggleSidebar()" class="text-gray-600 hover:text-red-500 text-xl">&times;</button>
+    </div>
+    <div class="p-4">
+      <input type="text" placeholder="Search..." class="w-full px-4 py-2 mb-4 border border-gray-300 rounded focus:ring focus:ring-blue-200" />
+      <ul class="space-y-3">
+        <li><a href="#" class="block text-gray-700 hover:text-blue-600">Home</a></li>
+        <li><a href="#features" class="block text-gray-700 hover:text-blue-600">Features</a></li>
+        <li><a href="#about" class="block text-gray-700 hover:text-blue-600">About</a></li>
+        <li><a href="#contact" class="block text-gray-700 hover:text-blue-600">Contact</a></li>
       </ul>
-    </aside>
+    </div>
+  </aside>
 
-    <script>
-      const hamburgerMenu = document.getElementById('hamburger-menu');
+  <!-- Navbar -->
+  <header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">FaithNexus</h1>
+      <nav class="hidden md:flex space-x-4">
+        <a href="#" class="text-gray-700 hover:text-blue-600">Home</a>
+        <a href="#features" class="text-gray-700 hover:text-blue-600">Features</a>
+        <a href="#about" class="text-gray-700 hover:text-blue-600">About</a>
+        <a href="#contact" class="text-gray-700 hover:text-blue-600">Contact</a>
+        <a href="/login" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</a>
+      </nav>
+      <!-- Mobile Sidebar Toggle -->
+      <button class="md:hidden text-2xl text-gray-600 hover:text-blue-600" onclick="toggleSidebar()">&#9776;</button>
+    </div>
+  </header>
 
-      function openNav() {
-        sidebar.style.display = "block";
-        document.getElementById('close-btn').style.display = 'grid';
-        document.getElementById('open-btn').style.display = 'none';
-        hamburgerMenu.classList.remove('open-btn')
-      }
-      function closeNav() {
-        document.getElementById('open-btn').style.display = 'grid';
-        document.getElementById('close-btn').style.display = 'none';
-        sidebar.style.display = "none";
-      }
-    </script>
-    <!-- Main Content -->
-    <!-- <script>
-      const sidebar = document.getElementById('hamburger-menu');
-      const openBtn = document.getElementById('open-btn');
-      const closeBtn = document.createElement('button');
+  <!-- Hero Section -->
+  <section class="bg-blue-100 py-20 text-center">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-4xl font-bold text-blue-800 mb-4">Connecting Faith, People & Purpose</h2>
+      <p class="text-lg text-blue-700 mb-6">The all-in-one platform for church management, member engagement, and spiritual growth.</p>
+      <a href="/register" class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">Get Started</a>
+    </div>
+  </section>
 
-      closeBtn.id = 'close-btn';
-      closeBtn.className = 'hidden md:hidden';
-      closeBtn.innerHTML = `
-        <span class="block w-6 h-0.5 bg-gray-800 mb-1"></span>
-        <span class="block w-6 h-0.5 bg-gray-800 mb-1"></span>
-        <span class="block w-6 h-0.5 bg-gray-800"></span>
-      `;
-      closeBtn.onclick = closeNav;
-      document.body.appendChild(closeBtn);
-
-      function openNav() {
-        sidebar.style.transform = 'translateX(0)';
-        closeBtn.style.display = 'grid';
-        openBtn.style.display = 'none';
-      }
-
-      function closeNav() {
-        sidebar.style.transform = 'translateX(-100%)';
-        openBtn.style.display = 'grid';
-        closeBtn.style.display = 'none';
-      }
-    </script> -->
-    <div class="flex-1 flex flex-col">
-      <!-- Topbar -->
-      <div class="flex items-center justify-between bg-gray-100 p-4 shadow fixed top-0 left-0 right-0 z-10 h-12">
-        <div class="flex items-center space-x-4">
-          <div class="hamburger-menu open-btn" id="open-btn" onclick="openNav()" title="openNav">
-            <span class="line"></span>
-            <span class="line"></span>
-
-            <span class="line"></span>
-            <span class="line"></span>
-          </div>
-
-          <h2 class="text-xl font-bold">Dashboard</h2>
+  <!-- Features Section -->
+  <section id="features" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h3 class="text-3xl font-semibold text-center text-gray-800 mb-10">Platform Features</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="p-6 bg-gray-100 rounded-lg shadow-md">
+          <h4 class="text-xl font-bold mb-2 text-blue-600">Member Directory</h4>
+          <p>Manage members, roles, and groups with powerful search and activity tracking.</p>
         </div>
-        <div class="flex items-center space-x-4">
-          <div class="action-tailwind flex items-center space-x-4">
-            <i class="icon fas fa-moon text-gray-600 text-blue-500"></i>
-            <i class="icon fa fa-cog text-gray-600 text-blue-500"></i>
-          </div>
-          <div class="action-tailwind flex items-center space-x-4">
-            <i class="icon fas fa-bell text-gray-600 text-blue-500"></i>
-            <i class="icon fa fa-user-circle text-gray-600 text-blue-500"></i>
-          </div>
-
-
+        <div class="p-6 bg-gray-100 rounded-lg shadow-md">
+          <h4 class="text-xl font-bold mb-2 text-blue-600">Sermon Library</h4>
+          <p>Upload, organize, and share sermons in audio, video, or text format.</p>
         </div>
-      </div>
-
-      <!-- Dashboard Content -->
-      <div class="p-4 mt-10 space-y-4 flex-1 dash-content">
-        <!-- Overview Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="card p-4 shadow rounded">
-            <div class="flex items-center space-x-4">
-              <i class="fas fa-users text-blue-500 text-2xl"></i>
-              <h3 class="text-lg font-bold">Total Members</h3>
-            </div>
-            <h2 class="text-1xl font-bold mt-2">150</h2>
-          </div>
-          <div class="card p-4 shadow rounded">
-            <div class="flex items-center space-x-4">
-              <i class="fas fa-users text-green-500 text-2xl"></i>
-              <h3 class="text-lg font-bold">Total Workers</h3>
-            </div>
-            <h2 class="text-1xl font-bold mt-2">1,230</h2>
-          </div>
-          <div class="card p-4 shadow rounded">
-            <div class="flex items-center space-x-4">
-              <i class="fas fa-users text-yellow-500 text-1.5xl"></i>
-              <h3 class="text-lg font-bold">Attendance Stats</h3>
-            </div>
-            <div class="flex items-center space-x-2 mt-2">
-              <h2 class="text-1xl font-bold">320</h2>
-              <p class="text-sm text-gray-500">This Week</p>
-            </div>
-
-          </div>
-          <div class="card p-4 shadow rounded">
-            <div class="flex items-center space-x-4">
-              <i class="fas fa-users text-red-500 text-2xl"></i>
-              <h3 class="text-lg font-bold">Total Members</h3>
-            </div>
-            <h2 class="text-1xl font-bold mt-2">150</h2>
-          </div>
+        <div class="p-6 bg-gray-100 rounded-lg shadow-md">
+          <h4 class="text-xl font-bold mb-2 text-blue-600">Events & Attendance</h4>
+          <p>Schedule events, track attendance, and send reminders via SMS or email.</p>
         </div>
-
-        <!-- Additional Content -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <!-- Left Section -->
-          <div class="lg:col-span-2 space-y-4">
-            <div class="bg-white p-4 shadow rounded">
-              <h2 class="text-lg font-bold">Attendance Overview</h2>
-              <canvas id="attendanceChart" class="mt-4"></canvas>
-            </div>
-            <div class="bg-white p-4 shadow rounded">
-              <h2 class="text-lg font-bold">Members</h2>
-              <table class="w-full mt-4">
-                <thead>
-                  <tr class="text-left">
-                    <th class="border-b pb-2">Name</th>
-                    <th class="border-b pb-2">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="py-2">John Doe</td>
-                    <td class="py-2 text-green-500">Member</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2">Jane Smith</td>
-                    <td class="py-2 text-yellow-500">Visitor</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Right Section -->
-          <div class="space-y-4">
-            <div class="bg-white p-4 shadow rounded">
-              <h2 class="text-lg font-bold">Financial Overview</h2>
-              <canvas id="incomeChart" class="mt-4"></canvas>
-              <div class="flex justify-between mt-4">
-                <div>
-                  <h3 class="text-green-500 font-bold">&#8358;520,000</h3>
-                  <p class="text-sm text-gray-500">Income</p>
-                </div>
-                <div>
-                  <h3 class="text-red-500 font-bold">&#8358;410,000</h3>
-                  <p class="text-sm text-gray-500">Expenses</p>
-                </div>
-              </div>
-            </div>
-            <div class="bg-white p-4 shadow rounded">
-              <h2 class="text-lg font-bold">Recent Events</h2>
-              <table class="w-full mt-4">
-                <thead>
-                  <tr class="text-left">
-                    <th class="border-b pb-2">Event</th>
-                    <th class="border-b pb-2">Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="py-2">Prayer Meeting</td>
-                    <td class="py-2 text-gray-500">2 May, 2025</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2">Sunday Service</td>
-                    <td class="py-2 text-gray-500">2 May, 2025</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <div class="p-6 bg-gray-100 rounded-lg shadow-md">
+          <h4 class="text-xl font-bold mb-2 text-blue-600">Financial Management</h4>
+          <p>Track donations, tithes, offerings, and generate financial reports.</p>
+        </div>
+        <div class="p-6 bg-gray-100 rounded-lg shadow-md">
+          <h4 class="text-xl font-bold mb-2 text-blue-600">Communication Tools</h4>
+          <p>Send announcements, newsletters, and alerts via email or SMS.</p>
+        </div>
+        <div class="p-6 bg-gray-100 rounded-lg shadow-md">
+          <h4 class="text-xl font-bold mb-2 text-blue-600">Admin Dashboard</h4>
+          <p>Real-time analytics, role-based access, and intuitive control panels.</p>
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="bg-blue-50 py-16">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+      <h3 class="text-3xl font-semibold mb-6 text-gray-800">Why FaithNexus?</h3>
+      <p class="text-lg text-gray-700 mb-4">FaithNexus is built to empower churches and ministries by centralizing their administrative and spiritual tools. Whether you're a small fellowship or a large ministry, FaithNexus adapts to help you grow and stay connected.</p>
+      <p class="text-gray-600">Secure. Scalable. Spirit-led.</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h3 class="text-3xl font-semibold mb-6 text-gray-800">Stay Connected</h3>
+      <p class="mb-4 text-gray-600">Have questions or want to partner with us? Reach out below.</p>
+      <form class="max-w-xl mx-auto mt-6 space-y-4">
+        <input type="text" placeholder="Your Name" class="w-full border border-gray-300 px-4 py-2 rounded focus:ring focus:ring-blue-200" />
+        <input type="email" placeholder="Your Email" class="w-full border border-gray-300 px-4 py-2 rounded focus:ring focus:ring-blue-200" />
+        <textarea placeholder="Your Message" class="w-full border border-gray-300 px-4 py-2 rounded focus:ring focus:ring-blue-200"></textarea>
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+
+<footer class="bg-gray-900 text-gray-200 py-12">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-10">
+    
+    <!-- Company Info -->
+    <div>
+      <h4 class="text-xl font-semibold mb-4 text-white">FaithNexus</h4>
+      <p class="text-gray-400 text-sm">
+        Empowering ministries with digital tools for connection, growth, and impact. Centralized management for modern churches.
+      </p>
+    </div>
+    
+    <!-- Quick Links -->
+    <div>
+      <h4 class="text-lg font-semibold mb-4 text-white">Quick Links</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#" class="hover:underline hover:text-blue-400">Home</a></li>
+        <li><a href="#features" class="hover:underline hover:text-blue-400">Features</a></li>
+        <li><a href="#about" class="hover:underline hover:text-blue-400">About Us</a></li>
+        <li><a href="#contact" class="hover:underline hover:text-blue-400">Contact</a></li>
+        <li><a href="/login" class="hover:underline hover:text-blue-400">Login</a></li>
+      </ul>
+    </div>
+
+    <!-- Support -->
+    <div>
+      <h4 class="text-lg font-semibold mb-4 text-white">Support</h4>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#" class="hover:underline hover:text-blue-400">Help Center</a></li>
+        <li><a href="#" class="hover:underline hover:text-blue-400">Terms of Service</a></li>
+        <li><a href="#" class="hover:underline hover:text-blue-400">Privacy Policy</a></li>
+        <li><a href="#" class="hover:underline hover:text-blue-400">FAQs</a></li>
+      </ul>
+    </div>
+
+    <!-- Newsletter -->
+    <div>
+      <h4 class="text-lg font-semibold mb-4 text-white">Newsletter</h4>
+      <p class="text-gray-400 text-sm mb-4">Subscribe to receive updates, announcements, and spiritual insights.</p>
+      <form class="flex flex-col sm:flex-row gap-2">
+        <input type="email" placeholder="Enter your email" class="px-4 py-2 w-full rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring focus:ring-blue-500" />
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white w-full sm:w-auto">Subscribe</button>
+      </form>
+    </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="static/assets/js/navbar.jss"></script>
-  <script src="static/assets/js/charts.js"></script>
-</body>
+  <div class="border-t border-gray-700 mt-10 pt-6 text-center text-sm text-gray-500">
+    &copy; 2025 FaithNexus. All rights reserved.
+  </div>
+</footer>
 
+</body>
 </html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"
+    integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous" />
+  <!-- tailwind css cdn -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="static/css/dashboard.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="static/js/dashboard.js" defer></script>
+</head>
+
+<body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const darkModeToggle = document.querySelector('.fa-moon');
+      const body = document.body;
+
+      // Check for saved dark mode preference
+      const savedDarkMode = localStorage.getItem('darkMode');
+      if (savedDarkMode === 'enabled') {
+        body.classList.add('dark-mode');
+      }
+
+      darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+          localStorage.setItem('darkMode', 'enabled');
+        } else {
+          localStorage.setItem('darkMode', 'disabled');
+        }
+      });
+    });
+
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+
+    function openNav() {
+      sidebar.style.display = "block";
+      document.getElementById('close-btn').style.display = 'grid';
+      document.getElementById('open-btn').style.display = 'none';
+      hamburgerMenu.classList.remove('open-btn')
+    }
+    function closeNav() {
+      document.getElementById('open-btn').style.display = 'grid';
+      document.getElementById('close-btn').style.display = 'none';
+      sidebar.style.display = "none";
+    }
+  </script>
+
+  <style>
+
+  </style>
+  <div class="flex flex-col md:flex-row min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white h-screen" id="sidebar">
+      <div class="flex p-4 items-center space-x-2">
+        <div class="flex p-4 items-center">
+          <img src="static/assets/images/dlcf logo.jpg" alt="Logo" class="w-10 h-10 mx-auto rounded-xl">
+          <h2 class="text-center text-lg font-bold">DLCF Fideipoly</h2>
+        </div>
+
+        <button id="close-btn" class="hidden md:hidden" onclick="closeNav()">
+          <i class="fas fa-times text-blue-500"></i>
+        </button>
+      </div>
+      <ul class="mt-4 space-y-2">
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Dashboard</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Members</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Attendance</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Finance</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Sermon Library</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Settings</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Logout</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <!-- Topbar -->
+      <div class="flex items-center justify-between bg-gray-100 p-4 shadow fixed top-0 left-0 right-0 z-10 h-12">
+        <div class="flex items-center space-x-4">
+          <div class="hamburger-menu open-btn" id="open-btn" onclick="openNav()" title="openNav">
+            <span class="line"></span>
+            <span class="line"></span>
+
+            <span class="line"></span>
+            <span class="line"></span>
+          </div>
+
+          <h2 class="text-xl font-bold">Events</h2>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="action-tailwind flex items-center space-x-4">
+            <i class="icon fas fa-moon text-gray-600 text-blue-500"></i>
+            <i class="icon fa fa-cog text-gray-600 text-blue-500"></i>
+          </div>
+          <div class="action-tailwind flex items-center space-x-4">
+            <i class="icon fas fa-bell text-gray-600 text-blue-500"></i>
+            <i class="icon fa fa-user-circle text-gray-600 text-blue-500"></i>
+          </div>
+
+
+        </div>
+      </div>
+
+      <!-- Dashboard Content -->
+      <div class="p-4 mt-10 space-y-4 flex-1 dash-content">
+        <!-- Create Event Form -->
+        <div class="bg-gray-200 p-6 rounded shadow-md">
+          <h3 class="text-lg font-bold mb-4">Create Event</h3>
+          <form id="create-event-form">
+            <div class="mb-4">
+              <label for="event-name" class="block text-sm font-medium text-gray-700">Event Name</label>
+              <input type="text" id="event-name" name="event-name"
+                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                required>
+            </div>
+            <div class="mb-4">
+              <label for="event-date" class="block text-sm font-medium text-gray-700">Event Date</label>
+              <input type="date" id="event-date" name="event-date"
+                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                required>
+            </div>
+            <div class="mb-4">
+              <label for="event-description" class="block text-sm font-medium text-gray-700">Event
+                Description</label>
+              <textarea id="event-description" name="event-description" rows="4"
+                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                required></textarea>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Create
+              Event</button>
+          </form>
+        </div>
+
+
+        <!-- Modal for Event Link -->
+        <div id="event-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+          <div class="bg-white p-6 rounded shadow-md w-96">
+            <h3 class="text-lg font-bold mb-4">Event Created Successfully</h3>
+            <p class="mb-4">Here is your event invitation link:</p>
+            <div class="flex items-center mb-4">
+              <input type="text" id="event-link"
+                class="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" readonly>
+              <button id="copy-link" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Copy
+                Link</button>
+            </div>
+            <div class="flex justify-center">
+              <button id="download-qr" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Download QR
+                Code</button>
+            </div>
+            <button id="close-modal"
+              class="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 w-full">Close</button>
+          </div>
+        </div>
+
+
+        <div class="overflow-x-auto">
+          <h2 class="text-lg font-bold">Upcoming Events</h2>
+
+          <table class="min-w-full bg-white dark:bg-gray-800 text-sm text-left text-gray-800 dark:text-gray-200">
+            <thead class="bg-gray-100 dark:bg-gray-700">
+              <tr>
+                <th class="px-4 py-3">Date</th>
+                <th class="px-4 py-3">Event type</th>
+                <th class="px-4 py-3">Description</th>
+                <th class="px-4 py-3">Theme</th>
+                <th class="px-4 py-3">Venue</th>
+                <th class="px-4 py-3">Link</th>
+                <th class="px-4 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="eventTableBody">
+              <tr class="border-b border-gray-200 dark:border-gray-700">
+                <td class="px-4 py-2">May 15, 2025</td>
+                <td class="px-4 py-2">crusade</td>
+                <td class="px-4 py-2">Event description goes here</td>
+                <td class="px-4 py-2">Theme A</td>
+                <td class="px-4 py-2">Venue A</td>
+                <td class="px-4 py-2">www.example.com</td>
+                <td class="px-4 py-2 space-x-2">
+                  <button class="text-green-600 hover:text-green-800"><i class="fas fa-eye"></i></button>
+                  <button class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                  <button class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <script>
+          document.getElementById('create-event-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Simulate event creation and generate link
+            const eventLink = `https://example.com/event/${Date.now()}`;
+            document.getElementById('event-link').value = eventLink;
+
+            // Show modal
+            document.getElementById('event-modal').classList.remove('hidden');
+
+            // Copy link functionality
+            document.getElementById('copy-link').addEventListener('click', () => {
+              navigator.clipboard.writeText(eventLink).then(() => {
+                alert('Link copied to clipboard!');
+              });
+            });
+            // Download QR Code functionality
+            document.getElementById('download-qr').addEventListener('click', () => {
+              const qrCanvas = document.createElement('canvas');
+              QRCode.toCanvas(qrCanvas, eventLink, { width: 200 }, (error) => {
+                if (!error) {
+                  const link = document.createElement('a');
+                  link.download = 'event-qr-code.png';
+                  link.href = qrCanvas.toDataURL();
+                  link.click();
+                }
+              });
+            });
+
+            // Close modal
+            document.getElementById('close-modal').addEventListener('click', () => {
+              document.getElementById('event-modal').classList.add('hidden');
+            });
+          });
+        </script>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="static/assets/js/navbar.jss"></script>
+  <script src="static/assets/js/charts.js"></script>
+</body>
+
+</html>

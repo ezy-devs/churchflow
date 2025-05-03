@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Members</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"
+    integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous" />
+  <!-- tailwind css cdn -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="static/css/dashboard.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="static/js/dashboard.js" defer></script>
+</head>
+
+<body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const darkModeToggle = document.querySelector('.fa-moon');
+      const body = document.body;
+
+      // Check for saved dark mode preference
+      const savedDarkMode = localStorage.getItem('darkMode');
+      if (savedDarkMode === 'enabled') {
+        body.classList.add('dark-mode');
+      }
+
+      darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+          localStorage.setItem('darkMode', 'enabled');
+        } else {
+          localStorage.setItem('darkMode', 'disabled');
+        }
+      });
+    });
+
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+
+    function openNav() {
+      sidebar.style.display = "block";
+      document.getElementById('close-btn').style.display = 'grid';
+      document.getElementById('open-btn').style.display = 'none';
+      hamburgerMenu.classList.remove('open-btn')
+    }
+    function closeNav() {
+      document.getElementById('open-btn').style.display = 'grid';
+      document.getElementById('close-btn').style.display = 'none';
+      sidebar.style.display = "none";
+    }
+  </script>
+
+  <div class="flex flex-col md:flex-row min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white h-screen" id="sidebar">
+      <div class="flex p-4 items-center space-x-2">
+        <div class="flex p-4 items-center">
+          <img src="static/assets/images/dlcf logo.jpg" alt="Logo" class="w-10 h-10 mx-auto rounded-xl">
+          <h2 class="text-center text-lg font-bold">DLCF Fideipoly</h2>
+        </div>
+
+        <button id="close-btn" class="hidden md:hidden" onclick="closeNav()">
+          <i class="fas fa-times text-blue-500"></i>
+        </button>
+      </div>
+      <ul class="mt-4 space-y-2">
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Dashboard</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Members</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Attendance</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Finance</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Sermon Library</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Settings</a></li>
+        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Logout</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <!-- Topbar -->
+      <div class="flex items-center justify-between bg-gray-100 p-4 shadow fixed top-0 left-0 right-0 z-10 h-12">
+        <div class="flex items-center space-x-4">
+          <div class="hamburger-menu open-btn" id="open-btn" onclick="openNav()" title="openNav">
+            <span class="line"></span>
+            <span class="line"></span>
+
+            <span class="line"></span>
+            <span class="line"></span>
+          </div>
+
+          <h2 class="text-xl font-bold">Events</h2>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="action-tailwind flex items-center space-x-4">
+            <i class="icon fas fa-moon text-gray-600 text-blue-500"></i>
+            <i class="icon fa fa-cog text-gray-600 text-blue-500"></i>
+          </div>
+          <div class="action-tailwind flex items-center space-x-4">
+            <i class="icon fas fa-bell text-gray-600 text-blue-500"></i>
+            <i class="icon fa fa-user-circle text-gray-600 text-blue-500"></i>
+          </div>
+
+
+        </div>
+      </div>
+
+      <!-- Dashboard Content -->
+      <div class="p-4 mt-10 space-y-4 flex-1 dash-content">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold">Search Members</h2>
+            <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Search by name, email, or role..." 
+            class="border border-gray-300 rounded px-4 py-2 w-1/2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <script>
+            document.getElementById('searchInput').addEventListener('input', function () {
+            const query = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#eventTableBody tr');
+    
+            rows.forEach(row => {
+              const name = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+              const email = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+              const role = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+    
+              if (name.includes(query) || email.includes(query) || role.includes(query)) {
+                row.style.display = '';
+              } else {
+                row.style.display = 'none';
+              }
+            });
+            });
+          </script>
+        <!-- Overview Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="card cursor-pointer p-4 shadow rounded">
+          <div class="flex items-center space-x-4 btn-primary">
+            <i class="fas fa-plus text-blue-500 text-2xl"></i>
+            <a href="#" class="text-gray-500">Add Member</a>
+          </div>
+        </div>
+       
+      </div>
+<script>
+    document.getElementById('addMemberForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Add logic to handle form submission
+        addMemberModal.classList.add('hidden');
+        alert('Member has been successfully added!');
+    });
+</script>
+    <div class="overflow-x-auto">
+        <h2 class="text-lg font-bold">Members</h2>
+        <div class="flex justify-end mb-4">
+            <select id="eventFilter" class="border border-gray-300 rounded px-4 py-2">
+                <option value="all">All Members</option>
+                <option value="visitors">Visitors</option>
+                <option value="members">Members</option>
+                <option value="workers">Workers</option>
+            </select>
+        </div>
+        <table class="min-w-full bg-white dark:bg-gray-800 text-sm text-left text-gray-800 dark:text-gray-200">
+            <thead class="bg-gray-100 dark:bg-gray-700">
+                <tr>
+                    <th class="px-4 py-3">Name</th>
+                    <th class="px-4 py-3">Email</th>
+                    <th class="px-4 py-3">Phone</th>
+                    <th class="px-4 py-3">Role</th>
+                    <th class="px-4 py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="eventTableBody">
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <td class="px-4 py-2">John Doe</td>
+                    <td class="px-4 py-2">johndoe@example.com</td>
+                    <td class="px-4 py-2">123-456-7890</td>
+                    <td class="px-4 py-2">Member</td>
+                    <td class="px-4 py-2 space-x-2">
+                        <button class="text-green-600 hover:text-green-800"><i class="fas fa-eye"></i></button>
+                        <button class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button>
+                        <button class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Member Modal -->
+    <div id="addMemberModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full p-6">
+            <h2 class="text-lg font-bold mb-4">Add Member</h2>
+            <form id="addMemberForm">
+                <div class="mb-4">
+                    <label for="memberName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+                    <input type="text" id="memberName" name="memberName" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" required>
+                </div>
+                <div class="mb-4">
+                    <label for="memberEmail" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                    <input type="email" id="memberEmail" name="memberEmail" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" required>
+                </div>
+                <div class="mb-4">
+                    <label for="memberPhone" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Phone</label>
+                    <input type="text" id="memberPhone" name="memberPhone" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" required>
+                </div>
+                <div class="mb-4">
+                    <label for="memberRole" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
+                    <select id="memberRole" name="memberRole" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                        <option value="Member">Member</option>
+                        <option value="Visitor">Visitor</option>
+                        <option value="Worker">Worker</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="closeAddMemberModal" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const addMemberModal = document.getElementById('addMemberModal');
+        const openAddMemberModalBtn = document.querySelector('.btn-primary');
+        const closeAddMemberModalBtn = document.getElementById('closeAddMemberModal');
+
+        openAddMemberModalBtn.addEventListener('click', () => {
+            addMemberModal.classList.remove('hidden');
+        });
+
+        closeAddMemberModalBtn.addEventListener('click', () => {
+            addMemberModal.classList.add('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === addMemberModal) {
+                addMemberModal.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('addMemberForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add logic to handle form submission
+            addMemberModal.classList.add('hidden');
+        });
+    </script>
+    <script>
+        document.getElementById('eventFilter').addEventListener('change', function () {
+            const filter = this.value;
+            const rows = document.querySelectorAll('#eventTableBody tr');
+            const today = new Date();
+
+            rows.forEach(row => {
+                const dateCell = row.querySelector('td:first-child');
+                const eventDate = new Date(dateCell.textContent);
+
+                if (filter === 'upcoming' && eventDate < today) {
+                    row.style.display = 'none';
+                } else if (filter === 'past' && eventDate >= today) {
+                    row.style.display = 'none';
+                } else {
+                    row.style.display = '';
+                }
+            });
+        });
+    </script>
+      <!-- Animations (Tailwind Custom) -->
+      <style>
+        @keyframes slideDown {
+          from {
+            transform: translateY(-20px);
+            opacity: 0;
+          }
+
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        .animate-slideDown {
+          animation: slideDown 0.3s ease-out forwards;
+        }
+      </style>
+
+      <!-- Script -->
+      <script>
+        const openModalBtn = document.querySelector('.btn-primary');
+        const modal = document.getElementById('addAttendanceModal');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        openModalBtn?.addEventListener('click', (e) => {
+          e.preventDefault();
+          modal.classList.remove('hidden');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+          modal.classList.add('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+          if (e.target === modal) {
+        modal.classList.add('hidden');
+          }
+        });
+
+        // Ensure modal responsiveness
+        window.addEventListener('resize', () => {
+          const modalContent = modal.querySelector('.max-w-md');
+          if (window.innerWidth < 640) {
+        modalContent.classList.add('w-full', 'px-4');
+          } else {
+        modalContent.classList.remove('w-full', 'px-4');
+          }
+        });
+      </script>
+
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="static/assets/js/navbar.jss"></script>
+  <script src="static/assets/js/charts.js"></script>
+</body>
+
+</html>

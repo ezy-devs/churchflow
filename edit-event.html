@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Event - Name</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"
+        integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous" />
+    <!-- tailwind css cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/dashboard.css" />
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="static/js/dashboard.js" defer></script>
+</head>
+
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.querySelector('.fa-moon');
+            const body = document.body;
+
+            // Check for saved dark mode preference
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode === 'enabled') {
+                body.classList.add('dark-mode');
+            }
+
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+        });
+
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+
+        function openNav() {
+            sidebar.style.display = "block";
+            document.getElementById('close-btn').style.display = 'grid';
+            document.getElementById('open-btn').style.display = 'none';
+            hamburgerMenu.classList.remove('open-btn')
+        }
+        function closeNav() {
+            document.getElementById('open-btn').style.display = 'grid';
+            document.getElementById('close-btn').style.display = 'none';
+            sidebar.style.display = "none";
+        }
+    </script>
+
+    <style>
+
+    </style>
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-gray-800 text-white h-screen" id="sidebar">
+            <div class="flex p-4 items-center space-x-2">
+                <div class="flex p-4 items-center">
+                    <img src="static/assets/images/dlcf logo.jpg" alt="Logo" class="w-10 h-10 mx-auto rounded-xl">
+                    <h2 class="text-center text-lg font-bold">DLCF Fideipoly</h2>
+                </div>
+
+                <button id="close-btn" class="hidden md:hidden" onclick="closeNav()">
+                    <i class="fas fa-times text-blue-500"></i>
+                </button>
+            </div>
+            <ul class="mt-4 space-y-2">
+                <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Dashboard</a></li>
+                <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Members</a></li>
+                <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Attendance</a></li>
+                <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Finance</a></li>
+                <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Sermon Library</a></li>
+                <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Settings</a></li>
+                <li><a href="#" class="block px-4 py-2 hover:bg-gray-700">Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <!-- Topbar -->
+            <div class="flex items-center justify-between bg-gray-100 p-4 shadow fixed top-0 left-0 right-0 z-10 h-12">
+                <div class="flex items-center space-x-4">
+                    <div class="hamburger-menu open-btn" id="open-btn" onclick="openNav()" title="openNav">
+                        <span class="line"></span>
+                        <span class="line"></span>
+
+                        <span class="line"></span>
+                        <span class="line"></span>
+                    </div>
+
+                    <h2 class="text-xl font-bold">Edit Event</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="action-tailwind flex items-center space-x-4">
+                        <i class="icon fas fa-moon text-gray-600 text-blue-500"></i>
+                        <i class="icon fa fa-cog text-gray-600 text-blue-500"></i>
+                    </div>
+                    <div class="action-tailwind flex items-center space-x-4">
+                        <i class="icon fas fa-bell text-gray-600 text-blue-500"></i>
+                        <i class="icon fa fa-user-circle text-gray-600 text-blue-500"></i>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="p-4 mt-10 space-y-4 flex-1 dash-content">
+                <!-- Create Event Form -->
+                <div class="bg-gray-200 p-6 rounded shadow-md">
+                    <h3 class="text-lg font-bold mb-4">Edit Event - Name</h3>
+                    <form id="create-event-form">
+                        <div class="mb-4">
+                            <label for="event-name" class="block text-sm font-medium text-gray-700">Event Name</label>
+                            <input type="text" id="event-name" name="event-name"
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="event-date" class="block text-sm font-medium text-gray-700">Event Date</label>
+                            <input type="date" id="event-date" name="event-date"
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="event-description" class="block text-sm font-medium text-gray-700">Event
+                                Description</label>
+                            <textarea id="event-description" name="event-description" rows="4"
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Edit
+                            Event</button>
+                    </form>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="static/assets/js/navbar.jss"></script>
+    <script src="static/assets/js/charts.js"></script>
+</body>
+
+</html>

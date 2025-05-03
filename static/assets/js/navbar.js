@@ -1,13 +1,13 @@
 const hamburgerMenu = document.getElementById('hamburger-menu');
-const sidebar = document.getElementById('sidebar');
-
-// hamburgerMenu.addEventListener('click', () => {
-//     sidebar.style.display = "block";
-// })
-
 
 function openNav() {
-    sidebar.style.display = "block";
-    hamburgerMenu.classList.add('close-btn')
+  sidebar.style.display = "block";
+  document.getElementById('close-btn').style.display = 'grid';
+  document.getElementById('open-btn').style.display = 'none';
+  hamburgerMenu.classList.remove('open-btn')
 }
-
+function closeNav() {
+  document.getElementById('open-btn').style.display = 'grid';
+  document.getElementById('close-btn').style.display = 'none';
+  sidebar.style.display = "none";
+}
